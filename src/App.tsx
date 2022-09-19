@@ -1,12 +1,22 @@
-import { Tractor, Spacer, Typography } from "@aircall/tractor";
+import { Tractor } from "@aircall/tractor";
+import { Routes, Route } from "react-router-dom";
+import { HomeView, LoginView, DetailView, ErrorView } from "./views";
+import { AuthProvider } from "./contexts/AuthContext";
+import { ProtectedRoute } from "./components";
 
 const App = () => {
   return (
     <Tractor injectStyle>
-      <Spacer space="s">
-        <Typography variant="displayM">Hello</Typography>
-        <Typography variant="displayL">World</Typography>
-      </Spacer>
+      <AuthProvider>
+        <Routes>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<HomeView />} />
+            <Route path="/detail/:callId" element={<DetailView />} />
+          </Route>
+          <Route path="/login" element={<LoginView />} />
+          <Route path="*" element={<ErrorView />} />
+        </Routes>
+      </AuthProvider>
     </Tractor>
   );
 };
