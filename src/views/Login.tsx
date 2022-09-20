@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../hooks";
 import {
   Flex,
   Form,
@@ -7,18 +9,16 @@ import {
   Grid,
   Button,
 } from "@aircall/tractor";
-import { useMutation } from "@apollo/client";
-import { LOGIN } from "../queries/mutations";
+import { PATHS } from "../constants";
 
 export const LoginView = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [login, { data, loading, error }] = useMutation(LOGIN);
-  console.log({ data, loading, error });
+  const { handleLogin, isUserLoggedIn } = useAuth();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login({ variables: { input: { username, password } } });
+    handleLogin({ username, password });
   };
 
   const handleUsername = (e: React.FormEvent<HTMLInputElement>) => {
@@ -30,6 +30,10 @@ export const LoginView = () => {
     const value = e.currentTarget.value;
     setPassword(value);
   };
+
+  const isButtonDisabled = !username || !password;
+
+  if (isUserLoggedIn) return <Navigate to={PATHS.home} />;
   return (
     <Flex
       flexDirection="column"
@@ -40,7 +44,7 @@ export const LoginView = () => {
       <Form onSubmit={handleSubmit}>
         <Grid
           width={{
-            _: "100%",
+            _: "90vw",
             md: "300px",
             xl: "300px",
           }}
@@ -63,7 +67,9 @@ export const LoginView = () => {
             />
           </FormItem>
           <FormItem gridColumn="1 / 3">
-            <Button type="submit">Login</Button>
+            <Button disabled={isButtonDisabled} type="submit">
+              Login
+            </Button>
           </FormItem>
         </Grid>
       </Form>

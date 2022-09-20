@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { HomeView, LoginView, DetailView, ErrorView } from "./views";
 import { AuthProvider, ApolloProvider } from "./contexts";
 import { ProtectedRoute } from "./components";
+import { PATHS } from "./constants";
 
 const App = () => {
   return (
@@ -11,10 +12,10 @@ const App = () => {
         <AuthProvider>
           <Routes>
             <Route element={<ProtectedRoute />}>
-              <Route path="/" element={<HomeView />} />
-              <Route path="/detail/:callId" element={<DetailView />} />
+              <Route path={PATHS.home} element={<HomeView />} />
+              <Route path={PATHS.detail} element={<DetailView />} />
             </Route>
-            <Route path="/login" element={<LoginView />} />
+            <Route path={PATHS.login} element={<LoginView />} />
             <Route path="*" element={<ErrorView />} />
           </Routes>
         </AuthProvider>
