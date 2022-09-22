@@ -1,12 +1,15 @@
 import { createContext, useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
-import { LOGIN, REFRESH_TOKEN } from "../queries/mutations";
+import { LOGIN, REFRESH_TOKEN } from "../gql/mutations";
 import { localStorageManager } from "../core";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../constants";
 
 export const AuthContext = createContext({
   isUserLoggedIn: false,
   handleLogin: ({ username, password }: LoginProps) => {},
   updateToken: () => {},
+  handleLogout: () => {},
 });
 
 type AuthProviderProps = {
@@ -20,6 +23,8 @@ type LoginProps = {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
   const [login, { data }] = useMutation(LOGIN);
   const [updateToken, { data: updateTokenData, loading, called }] =
     useMutation(REFRESH_TOKEN);
@@ -43,20 +48,31 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, [refreshRefreshToken, refreshAccessToken]);
 
   useEffect(() => {
-    updateToken();
+    updateToken({
+      onCompleted: () => {
+        setIsUserLoggedIn(true);
+      },
+    });
   }, []);
 
-  useEffect(() => {
-    if (!refreshAccessToken) return;
-    setIsUserLoggedIn(true);
-  }, [refreshAccessToken]);
-
   const handleLogin = ({ username, password }: LoginProps) => {
-    login({ variables: { input: { username, password } } });
-    setIsUserLoggedIn(true);
+    login({
+      variables: { input: { username, password } },
+      onCompleted: () => {
+        setIsUserLoggedIn(true);
+      },
+    });
   };
 
-  const handleLogout = () => {};
+  const handleLogout = () => {
+    console.log({ handleLogout: true });
+    localStorageManager.remove("refresh_token");
+    localStorageManager.remove("access_token");
+    setIsUserLoggedIn(false);
+    console.log({ PATHS });
+
+    return navigate(PATHS.login);
+  };
 
   const value = {
     isUserLoggedIn,
