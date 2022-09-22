@@ -1,3 +1,10 @@
+import { CallsTable, Navbar } from "../components";
+
 export const HomeView = () => {
-  return <div>Home view</div>;
+  return (
+    <>
+      <Navbar />
+      <CallsTable />
+    </>
+  );
 };
