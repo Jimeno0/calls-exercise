@@ -1,7 +1,7 @@
 import { Tractor } from "@aircall/tractor";
 import { Routes, Route } from "react-router-dom";
 import { HomeView, LoginView, DetailView, ErrorView } from "./views";
-import { AuthProvider, ApolloProvider } from "./contexts";
+import { AuthProvider, ApolloProvider, CallsContextProvider } from "./contexts";
 import { ProtectedRoute } from "./components";
 import { PATHS } from "./constants";
 
@@ -10,6 +10,7 @@ const App = () => {
     <Tractor injectStyle>
       <ApolloProvider>
         <AuthProvider>
+          <CallsContextProvider>
           <Routes>
             <Route element={<ProtectedRoute />}>
               <Route path={PATHS.home} element={<HomeView />} />
@@ -18,6 +19,7 @@ const App = () => {
             <Route path={PATHS.login} element={<LoginView />} />
             <Route path="*" element={<ErrorView />} />
           </Routes>
+          </CallsContextProvider>
         </AuthProvider>
       </ApolloProvider>
     </Tractor>

@@ -13,7 +13,7 @@ export type CallType = {
   call_type: string;
   via: string;
   created_at: string;
-  notes: Note[];
+  notes: Note[] | [];
 };
 
 

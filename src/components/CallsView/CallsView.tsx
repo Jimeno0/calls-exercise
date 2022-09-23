@@ -1,55 +1,29 @@
-import { useState, useEffect } from "react";
-import { useQuery, useMutation } from "@apollo/client";
-import { PAGINATED_CALLS } from "../../gql/queries";
-import { ARCHIEVE_CALL } from "../../gql/mutations";
+import { useState } from "react";
 import { Pagination, BaseRecord, Tab } from "@aircall/tractor";
 import { CallsTableWrapper, PaginationWrapper } from "./CallsView.styled";
-import { callsTableMapper } from "./CallsView.mapper";
 import { CallsTable, CallsGrouped } from "./components";
+import { useCalls } from "../../hooks/useCalls";
 
 export const CallsView = () => {
-  const [pageSize, setPageSize] = useState(50);
-  const [activePage, setActivePage] = useState(0);
   const [activeTab, setActiveTab] = useState(1);
-  const { loading, fetchMore, data } = useQuery(PAGINATED_CALLS, {
-    variables: {
-      offset: activePage,
-      limit: pageSize,
-    },
-  });
-  const [archive] = useMutation(ARCHIEVE_CALL);
-  const callsList = callsTableMapper.parseData(data?.paginatedCalls?.nodes);
-  const groupedCallsList = callsTableMapper.parseGroupedData(callsList);
-  const totalCount = data?.paginatedCalls?.totalCount;
 
-  const handlePageChange = (value: number) => {
-    setActivePage(value - 1);
-  };
-  const handlePageSizeChange = (value: number) => {
-    setPageSize(value);
-  };
-  const handleDisableRow = (rowData: BaseRecord) => {
-    return rowData?.is_archived;
-  };
   const handleRowClick = (rowData: BaseRecord) => {
     //TODO navigate to detail view
     console.log({ rowData });
   };
 
-  const handleArchive = (data: BaseRecord) => {
-    data.forEach(({ id }: BaseRecord) => {
-      archive({
-        variables: { id },
-        // onCompleted: () => {
-        //   console.log("SUCCESSSSS");
-        // },
-      });
-    });
-  };
-  useEffect(() => {
-    const offset = activePage * pageSize;
-    fetchMore({ variables: { offset, limit: pageSize } });
-  }, [pageSize, activePage]);
+  const {
+    loading,
+    handlePageChange,
+    handleArchive,
+    handleDisableRow,
+    callsList,
+    groupedCallsList,
+    totalCount,
+    activePage,
+    pageSize,
+    handlePageSizeChange,
+  } = useCalls();
 
   return (
     <>
