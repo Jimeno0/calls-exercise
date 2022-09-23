@@ -1,3 +1,3 @@
 export * from "./ProtectedRoute";
-export * from "./CallsTable";
+export * from "./CallsView";
 export * from "./Navbar";

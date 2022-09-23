@@ -15,3 +15,9 @@ export type CallType = {
   created_at: string;
   notes: Note[];
 };
+
+
+
+export type GroupedCalls = {
+  [key: string]: CallType[]
+}
