@@ -1,4 +1,4 @@
-type Note = {
+export type Note = {
   id: string;
   content: string;
 };
@@ -16,8 +16,6 @@ export type CallType = {
   notes: Note[] | [];
 };
 
-
-
 export type GroupedCalls = {
-  [key: string]: CallType[]
-}
+  [key: string]: CallType[];
+};

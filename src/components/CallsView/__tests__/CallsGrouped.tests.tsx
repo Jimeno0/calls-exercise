@@ -1,6 +1,6 @@
 import { render, screen } from "custom-render.jest";
 import { CallsGrouped } from "../components/CallsGrouped";
-import { callData } from "../__fixtures__/callData";
+import { callData } from "components/__fixtures__/callData";
 
 const groupedCalls = {
   "12/08/22": [callData],

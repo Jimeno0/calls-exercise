@@ -1,6 +1,6 @@
 import { render, screen } from "custom-render.jest";
 import { CallsTable } from "../components/CallsTable";
-import { callData } from "../__fixtures__/callData";
+import { callData } from "components/__fixtures__/callData";
 
 describe("CallsTable", () => {
   test("Render table elements", () => {
