@@ -1,16 +1,27 @@
+import { useState } from "react";
 import { useAuth } from "../../hooks";
 import { Button } from "@aircall/tractor";
 import { NavbarWrapper } from "./Navbar.styled";
+import { FiltersModal } from "../FiltersModal";
 
 export const Navbar = () => {
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const { handleLogout } = useAuth();
 
   return (
-    <NavbarWrapper>
-      <Button onClick={handleLogout} mode="outline">
-        Logout
-      </Button>
-      <Button>Filter</Button>
-    </NavbarWrapper>
+    <>
+      <FiltersModal
+        isOpen={isOpenModal}
+        onCloseModal={() => {
+          setIsOpenModal(false);
+        }}
+      />
+      <NavbarWrapper>
+        <Button onClick={handleLogout} mode="outline">
+          Logout
+        </Button>
+        <Button onClick={() => setIsOpenModal(true)}>Filter</Button>
+      </NavbarWrapper>
+    </>
   );
 };

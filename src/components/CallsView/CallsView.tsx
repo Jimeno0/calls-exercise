@@ -5,7 +5,7 @@ import { CallsTable, CallsGrouped } from "./components";
 import { useCalls } from "../../hooks/useCalls";
 
 export const CallsView = () => {
-  const [activeTab, setActiveTab] = useState(1);
+  const [activeTab, setActiveTab] = useState(0);
 
   const handleRowClick = (rowData: BaseRecord) => {
     //TODO navigate to detail view

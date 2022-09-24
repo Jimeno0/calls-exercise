@@ -1,9 +1,9 @@
 import { createContext, useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
-import { LOGIN, REFRESH_TOKEN } from "../gql/mutations";
-import { localStorageManager } from "../core";
+import { LOGIN, REFRESH_TOKEN } from "../../gql/mutations";
+import { localStorageManager } from "../../core";
 import { useNavigate } from "react-router-dom";
-import { PATHS } from "../constants";
+import { PATHS } from "../../constants";
 
 export const AuthContext = createContext({
   isUserLoggedIn: false,

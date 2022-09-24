@@ -17,9 +17,17 @@ type ValuesType = {
   handlePageSizeChange: (value: number) => void;
   callsList: CallType[];
   groupedCallsList: {};
+  callTypeFilters: string[];
+  callDirectionFilters: string[];
+  handleAppyFilters: (
+    typeFilters: string[],
+    directionFilters: string[]
+  ) => void;
 };
 
 const initialCallsList: CallType[] = [];
+const initialCallTypeFilters: string[] = [];
+const initialCallDirectionFilters: string[] = [];
 
 export const CallsContext = createContext({
   loading: false,
@@ -31,6 +39,9 @@ export const CallsContext = createContext({
   pageSize: 0,
   handlePageSizeChange: (value: number) => {},
   callsList: initialCallsList,
+  callTypeFilters: initialCallTypeFilters,
+  callDirectionFilters: initialCallDirectionFilters,
+  handleAppyFilters: (typeFilters: string[], directionFilters: string[]) => {},
   groupedCallsList: {},
 });
 
@@ -41,15 +52,32 @@ export const CallsContextProvider = ({
 }) => {
   const [pageSize, setPageSize] = useState(50);
   const [activePage, setActivePage] = useState(0);
+  const [callTypeFilters, setCallTypeFilters] = useState(
+    initialCallTypeFilters
+  );
+  const [callDirectionFilters, setCallDirectionTypeFilters] = useState(
+    initialCallDirectionFilters
+  );
   const { loading, fetchMore, data } = useQuery(PAGINATED_CALLS, {
     variables: {
       offset: activePage,
       limit: pageSize,
     },
   });
+
+  const filters = {
+    callTypeFilters,
+    callDirectionFilters,
+  };
   const [archive] = useMutation(ARCHIEVE_CALL);
-  const callsList = callsTableMapper.parseData(data?.paginatedCalls?.nodes);
-  const groupedCallsList = callsTableMapper.parseGroupedData(callsList);
+  const callsList = callsTableMapper.parseData(
+    data?.paginatedCalls?.nodes,
+    filters
+  );
+  const groupedCallsList = callsTableMapper.parseGroupedData(
+    callsList,
+    filters
+  );
   const totalCount = data?.paginatedCalls?.totalCount;
 
   const handlePageChange = (value: number) => {
@@ -71,6 +99,14 @@ export const CallsContextProvider = ({
       });
     });
   };
+
+  const handleAppyFilters = (
+    callTypeFilters: string[],
+    callDirectionFilters: string[]
+  ) => {
+    setCallTypeFilters(callTypeFilters);
+    setCallDirectionTypeFilters(callDirectionFilters);
+  };
   useEffect(() => {
     const offset = activePage * pageSize;
     fetchMore({ variables: { offset, limit: pageSize } });
@@ -87,6 +123,9 @@ export const CallsContextProvider = ({
     activePage,
     pageSize,
     handlePageSizeChange,
+    callTypeFilters,
+    callDirectionFilters,
+    handleAppyFilters,
   };
 
   return (

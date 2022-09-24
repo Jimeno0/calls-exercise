@@ -7,8 +7,8 @@ import {
   concat,
 } from "@apollo/client";
 
-import { API_URL } from "../constants";
-import { localStorageManager } from "../core";
+import { API_URL } from "../../constants";
+import { localStorageManager } from "../../core";
 
 type ApolloClientProps = {
   children: React.ReactNode;
