@@ -5,4 +5,5 @@ export const PATHS = {
   home: "/",
   login: "/login",
   detail: "/detail/:id",
+  detailWithParam: (id: string) => `/detail/${id}`,
 };

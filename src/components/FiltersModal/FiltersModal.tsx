@@ -35,12 +35,7 @@ export const FiltersModal = ({ isOpen, onCloseModal }: ModalProps) => {
       <Modal.Dialog size={"regular"} show={isOpen} onHide={onCloseModal}>
         <Modal.Header>Filter results</Modal.Header>
         <Modal.Body p="m">
-          <FormItem
-            margin={4}
-            label="Call type"
-            name="callType"
-            gridColumn="1/3"
-          >
+          <FormItem margin={4} label="Call type" name="callType">
             <Checkbox
               checked={callType.includes(ANSWERED)}
               onChange={(bool) => handleCallType(bool, ANSWERED)}
@@ -63,12 +58,7 @@ export const FiltersModal = ({ isOpen, onCloseModal }: ModalProps) => {
               Voicemail
             </Checkbox>
           </FormItem>
-          <FormItem
-            margin={4}
-            label="Call Direction"
-            name="callDirection"
-            gridColumn="1/3"
-          >
+          <FormItem margin={4} label="Call Direction" name="callDirection">
             <Checkbox
               checked={callDirection.includes(INBOUND)}
               onChange={(bool) => handleCallDirection(bool, INBOUND)}

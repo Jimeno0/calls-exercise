@@ -69,7 +69,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     localStorageManager.remove("refresh_token");
     localStorageManager.remove("access_token");
     setIsUserLoggedIn(false);
-    console.log({ PATHS });
 
     return navigate(PATHS.login);
   };

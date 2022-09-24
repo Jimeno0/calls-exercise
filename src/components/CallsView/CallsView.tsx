@@ -3,11 +3,16 @@ import { Pagination, BaseRecord, Tab } from "@aircall/tractor";
 import { CallsTableWrapper, PaginationWrapper } from "./CallsView.styled";
 import { CallsTable, CallsGrouped } from "./components";
 import { useCalls } from "../../hooks/useCalls";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../../constants";
 
 export const CallsView = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const navigate = useNavigate();
 
   const handleRowClick = (rowData: BaseRecord) => {
+    navigate(PATHS.detailWithParam(rowData.id), { state: rowData });
+
     //TODO navigate to detail view
     console.log({ rowData });
   };
@@ -49,7 +54,10 @@ export const CallsView = () => {
               />
             </Tab.Item>
             <Tab.Item id={1}>
-              <CallsGrouped callsList={groupedCallsList} />
+              <CallsGrouped
+                handleRowClick={handleRowClick}
+                callsList={groupedCallsList}
+              />
             </Tab.Item>
           </Tab.Content>
         </Tab.Container>

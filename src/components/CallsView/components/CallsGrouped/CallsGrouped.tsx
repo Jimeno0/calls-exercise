@@ -1,14 +1,22 @@
-import { Accordion, Box, Typography, Flex } from "@aircall/tractor";
+import { Accordion, Box, Typography, Flex, BaseRecord } from "@aircall/tractor";
 import { CallType, GroupedCalls } from "../../../../types";
 
 type Props = {
   callsList: GroupedCalls;
+  handleRowClick: (rowData: BaseRecord) => void;
 };
 
-export const CallsGrouped = ({ callsList }: Props) => {
+export const CallsGrouped = ({ callsList, handleRowClick }: Props) => {
   const renderAccordionContent = (call: CallType) => {
     return (
-      <Flex key={call.id} p="m" justifyContent="space-between">
+      <Flex
+        key={call.id}
+        p="m"
+        justifyContent="space-between"
+        onClick={(e) => {
+          handleRowClick(call);
+        }}
+      >
         <Typography>{call.id}</Typography>
         <Typography>{call.created_at}</Typography>
         <Typography>{call.call_type}</Typography>
