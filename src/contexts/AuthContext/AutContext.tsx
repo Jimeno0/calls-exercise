@@ -25,31 +25,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-  const [login, { data }] = useMutation(LOGIN);
-  const [updateToken, { data: updateTokenData, loading, called }] =
-    useMutation(REFRESH_TOKEN);
-
-  const loginRefreshToken = data?.login?.refresh_token;
-  const loginAccessToken = data?.login?.access_token;
-
-  const refreshRefreshToken = updateTokenData?.refreshTokenV2?.refresh_token;
-  const refreshAccessToken = updateTokenData?.refreshTokenV2?.access_token;
-
-  useEffect(() => {
-    if (!loginRefreshToken || !loginAccessToken) return;
-    localStorageManager.set("refresh_token", loginRefreshToken);
-    localStorageManager.set("access_token", loginAccessToken);
-  }, [loginRefreshToken, loginAccessToken]);
-
-  useEffect(() => {
-    if (!refreshRefreshToken || !refreshAccessToken) return;
-    localStorageManager.set("refresh_token", refreshRefreshToken);
-    localStorageManager.set("access_token", refreshAccessToken);
-  }, [refreshRefreshToken, refreshAccessToken]);
+  const [login] = useMutation(LOGIN);
+  const [updateToken, { loading, called }] = useMutation(REFRESH_TOKEN);
 
   useEffect(() => {
     updateToken({
-      onCompleted: () => {
+      onCompleted: ({ refreshTokenV2 }) => {
+        const { access_token, refresh_token } = refreshTokenV2;
+        localStorageManager.set("refresh_token", refresh_token);
+        localStorageManager.set("access_token", access_token);
         setIsUserLoggedIn(true);
       },
     });
@@ -58,14 +42,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const handleLogin = ({ username, password }: LoginProps) => {
     login({
       variables: { input: { username, password } },
-      onCompleted: () => {
+      onCompleted: ({ login }) => {
+        const { access_token, refresh_token } = login;
+        localStorageManager.set("refresh_token", refresh_token);
+        localStorageManager.set("access_token", access_token);
         setIsUserLoggedIn(true);
       },
     });
   };
 
   const handleLogout = () => {
-    console.log({ handleLogout: true });
     localStorageManager.remove("refresh_token");
     localStorageManager.remove("access_token");
     setIsUserLoggedIn(false);

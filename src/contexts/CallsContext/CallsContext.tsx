@@ -1,10 +1,10 @@
 import { useState, useEffect, createContext } from "react";
 import { useQuery, useMutation } from "@apollo/client";
-import { PAGINATED_CALLS } from "../../gql/queries";
-import { ARCHIEVE_CALL } from "../../gql/mutations";
+import { PAGINATED_CALLS } from "gql/queries";
+import { ARCHIEVE_CALL } from "gql/mutations";
 import { BaseRecord } from "@aircall/tractor";
 import { callsTableMapper } from "./CallsContext.mapper";
-import { CallType } from "../../types";
+import { CallType } from "types";
 
 type ValuesType = {
   loading: boolean;

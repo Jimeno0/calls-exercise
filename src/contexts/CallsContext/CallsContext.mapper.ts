@@ -1,4 +1,4 @@
-import { CallType, GroupedCalls } from "../../types";
+import { CallType, GroupedCalls } from "types";
 
 type Filters = {
   callTypeFilters: string[];

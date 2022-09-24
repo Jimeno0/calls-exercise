@@ -12,9 +12,6 @@ export const CallsView = () => {
 
   const handleRowClick = (rowData: BaseRecord) => {
     navigate(PATHS.detailWithParam(rowData.id), { state: rowData });
-
-    //TODO navigate to detail view
-    console.log({ rowData });
   };
 
   const {

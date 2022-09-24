@@ -15,10 +15,10 @@ import {
   Button,
   Textarea,
 } from "@aircall/tractor";
-import { ADD_NOTE } from "../gql/mutations";
-import { CALL_FIELDS } from "../gql/fragments";
+import { ADD_NOTE } from "gql/mutations";
+import { CALL_FIELDS } from "gql/fragments";
 import { useParams } from "react-router-dom";
-import { client } from "../contexts";
+import { client } from "contexts";
 
 export const DetailView = () => {
   const { id } = useParams();
