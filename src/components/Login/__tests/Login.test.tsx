@@ -1,6 +1,6 @@
 import { render, screen } from "custom-render.jest";
-import { Login } from "../Login";
 import userEvent from "@testing-library/user-event";
+import { Login } from "../Login";
 
 const mockedHandleSubmit = jest.fn();
 const mockedHandleUsername = jest.fn();
