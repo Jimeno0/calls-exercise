@@ -1,11 +1,20 @@
-import { Modal, Form, Button, Box, FormItem, Checkbox } from "@aircall/tractor";
+import {
+  Modal,
+  Form,
+  Button,
+  Box,
+  FormItem,
+  Checkbox,
+  Typography,
+} from "@aircall/tractor";
 import { useForm } from "./useFiltersForm.hook";
-
-const ANSWERED = "answered";
-const MISSED = "missed";
-const VOICEMAIl = "voicemail";
-const INBOUND = "inbound";
-const OUTBOUND = "outbound";
+import {
+  ANSWERED,
+  MISSED,
+  VOICEMAIl,
+  INBOUND,
+  OUTBOUND,
+} from "constants/index";
 
 type ModalProps = {
   isOpen: boolean;
@@ -27,13 +36,13 @@ export const FiltersModal = ({ isOpen, onCloseModal }: ModalProps) => {
     onCloseModal();
   };
   return (
-    <Form
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
-    >
+    <Form onSubmit={onSubmit}>
       <Modal.Dialog size={"regular"} show={isOpen} onHide={onCloseModal}>
-        <Modal.Header>Filter results</Modal.Header>
+        <Modal.Header>
+          <Typography m={20} variant="displayM" fontWeight="bold">
+            Filter results
+          </Typography>
+        </Modal.Header>
         <Modal.Body p="m">
           <FormItem margin={4} label="Call type" name="callType">
             <Checkbox
@@ -85,7 +94,11 @@ export const FiltersModal = ({ isOpen, onCloseModal }: ModalProps) => {
             </Button>
           </Box>
           <Box ml={4}>
-            <Button onClick={onSubmit}>Apply</Button>
+            <FormItem>
+              <Button type="submit" onClick={onSubmit}>
+                Apply
+              </Button>
+            </FormItem>
           </Box>
         </Modal.Footer>
       </Modal.Dialog>

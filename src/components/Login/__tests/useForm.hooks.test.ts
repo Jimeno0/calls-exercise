@@ -3,7 +3,7 @@ import { useForm } from "../useForm.hooks";
 
 const mockedHandleLogin = jest.fn();
 
-jest.mock("hooks", () => ({
+jest.mock("hooks/useAuth", () => ({
   useAuth: () => ({
     handleLogin: mockedHandleLogin,
   }),

@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useCalls } from "../../hooks/useCalls";
+import { useCalls } from "hooks/useCalls";
 
 type CallTypeOptions = "answered" | "missed" | "voicemail";
 type CallDirectionOptions = "inbound" | "outbound";
-type Options = string[];
 
 export const useForm = () => {
-  const initialState: Options = [];
   const { callTypeFilters, callDirectionFilters, handleAppyFilters } =
     useCalls();
   const [callType, setCallType] = useState(callTypeFilters);

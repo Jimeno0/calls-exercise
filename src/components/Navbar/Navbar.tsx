@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "hooks";
+import { useAuth } from "hooks/useAuth";
 import { Button } from "@aircall/tractor";
 import { NavbarWrapper } from "./Navbar.styled";
 import { FiltersModal } from "components/FiltersModal";

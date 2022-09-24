@@ -4,7 +4,7 @@ import { Navbar } from "../Navbar";
 
 const mockedHandleLogout = jest.fn();
 
-jest.mock("hooks", () => ({
+jest.mock("hooks/useAuth", () => ({
   useAuth: () => ({
     handleLogout: mockedHandleLogout(),
   }),

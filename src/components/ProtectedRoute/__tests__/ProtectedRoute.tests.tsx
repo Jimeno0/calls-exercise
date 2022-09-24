@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 
 const mockedLoggedInValue = jest.fn();
 
-jest.mock("hooks", () => ({
+jest.mock("hooks/useAuth", () => ({
   useAuth: () => ({
     isUserLoggedIn: mockedLoggedInValue(),
   }),

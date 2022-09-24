@@ -7,3 +7,9 @@ export const PATHS = {
   detail: "/detail/:id",
   detailWithParam: (id: string) => `/detail/${id}`,
 };
+
+export const ANSWERED = "answered";
+export const MISSED = "missed";
+export const VOICEMAIl = "voicemail";
+export const INBOUND = "inbound";
+export const OUTBOUND = "outbound";
