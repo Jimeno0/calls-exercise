@@ -2,8 +2,8 @@ import { useRef } from "react";
 import { Table } from "@aircall/tractor";
 import { CallsTableWrapper } from "../../CallsView.styled";
 import { BaseRecord } from "@aircall/tractor";
-import { COLUMN_HEADERS } from "../../CallsView.constants";
-import { CallType } from "../../../../types";
+import { COLUMN_HEADERS } from "constants/index";
+import { CallType } from "types";
 
 type TableProps = {
   handleRowClick: (rowData: BaseRecord) => void;

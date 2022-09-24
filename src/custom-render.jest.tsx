@@ -1,12 +1,17 @@
 import { render } from "@testing-library/react";
 import { Tractor } from "@aircall/tractor";
+import { BrowserRouter } from "react-router-dom";
 
 type Props = {
   children: React.ReactNode;
 };
 
 const ThemedComponent = ({ children }: Props) => {
-  return <Tractor injectStyle>{children}</Tractor>;
+  return (
+    <BrowserRouter>
+      <Tractor injectStyle>{children}</Tractor>;
+    </BrowserRouter>
+  );
 };
 
 export const customRender = (

@@ -1,5 +1,5 @@
 import { Accordion, Box, Typography, Flex, BaseRecord } from "@aircall/tractor";
-import { CallType, GroupedCalls } from "../../../../types";
+import { CallType, GroupedCalls } from "types";
 
 type Props = {
   callsList: GroupedCalls;
@@ -13,7 +13,7 @@ export const CallsGrouped = ({ callsList, handleRowClick }: Props) => {
         key={call.id}
         p="m"
         justifyContent="space-between"
-        onClick={(e) => {
+        onClick={() => {
           handleRowClick(call);
         }}
       >

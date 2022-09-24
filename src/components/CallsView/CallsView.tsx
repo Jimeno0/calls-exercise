@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Pagination, BaseRecord, Tab } from "@aircall/tractor";
 import { CallsTableWrapper, PaginationWrapper } from "./CallsView.styled";
 import { CallsTable, CallsGrouped } from "./components";
-import { useCalls } from "../../hooks/useCalls";
+import { useCalls } from "hooks/useCalls";
 import { useNavigate } from "react-router-dom";
-import { PATHS } from "../../constants";
+import { PATHS } from "constants/index";
 
 export const CallsView = () => {
   const [activeTab, setActiveTab] = useState(0);

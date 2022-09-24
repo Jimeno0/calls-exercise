@@ -2,7 +2,6 @@ import { render, screen } from "custom-render.jest";
 import { Routes, Route } from "react-router-dom";
 import { ProtectedRoute } from "../ProtectedRoute";
 import { PATHS } from "constants/index";
-import { BrowserRouter } from "react-router-dom";
 
 const mockedLoggedInValue = jest.fn();
 
@@ -14,14 +13,12 @@ jest.mock("hooks/useAuth", () => ({
 
 const RoutesWithProtected = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<ProtectedRoute />}>
-          <Route path={"/"} element={<div>Home route</div>} />
-        </Route>
-        <Route path={PATHS.login} element={<div>Login route</div>} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route element={<ProtectedRoute />}>
+        <Route path={"/"} element={<div>Home route</div>} />
+      </Route>
+      <Route path={PATHS.login} element={<div>Login route</div>} />
+    </Routes>
   );
 };
 
