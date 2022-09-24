@@ -7,7 +7,7 @@ import {
   Grid,
   Button,
 } from "@aircall/tractor";
-import { PATHS } from "../../constants";
+import { PATHS } from "constants/index";
 import { useForm } from "./useForm.hooks";
 
 export const Login = () => {

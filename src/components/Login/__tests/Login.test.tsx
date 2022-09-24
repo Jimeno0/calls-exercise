@@ -1,4 +1,4 @@
-import { render, screen } from "../../../custom-render.jest";
+import { render, screen } from "custom-render.jest";
 import { Login } from "../Login";
 import userEvent from "@testing-library/user-event";
 

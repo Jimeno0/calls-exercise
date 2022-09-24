@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "../../hooks";
+import { useAuth } from "hooks";
 
 export const useForm = () => {
   const [username, setUsername] = useState("");
