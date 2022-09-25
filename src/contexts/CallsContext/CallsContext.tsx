@@ -2,6 +2,7 @@ import { useState, useEffect, createContext } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { PAGINATED_CALLS } from "gql/queries";
 import { ARCHIEVE_CALL } from "gql/mutations";
+import { ON_UPDATE_CALL } from "gql/subscriptions";
 import { BaseRecord } from "@aircall/tractor";
 import { callsTableMapper } from "./CallsContext.mapper";
 import { CallType } from "types";
@@ -58,12 +59,15 @@ export const CallsContextProvider = ({
   const [callDirectionFilters, setCallDirectionTypeFilters] = useState(
     initialCallDirectionFilters
   );
-  const { loading, fetchMore, data } = useQuery(PAGINATED_CALLS, {
-    variables: {
-      offset: activePage,
-      limit: pageSize,
-    },
-  });
+  const { loading, subscribeToMore, fetchMore, data } = useQuery(
+    PAGINATED_CALLS,
+    {
+      variables: {
+        offset: activePage,
+        limit: pageSize,
+      },
+    }
+  );
 
   const filters = {
     callTypeFilters,
@@ -111,6 +115,30 @@ export const CallsContextProvider = ({
     const offset = activePage * pageSize;
     fetchMore({ variables: { offset, limit: pageSize } });
   }, [pageSize, activePage]);
+
+  useEffect(() => {
+    subscribeToMore({
+      document: ON_UPDATE_CALL,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        const updatedCall = subscriptionData.data.onUpdatedCall;
+        const matchingId = prev.paginatedCalls.nodes.findIndex(
+          ({ id }: CallType) => id === updatedCall.id
+        );
+
+        if (!matchingId) return prev;
+        const newPaginatedCalls = [...prev.paginatedCalls.nodes];
+        newPaginatedCalls[matchingId] = updatedCall;
+
+        return Object.assign({}, prev, {
+          paginatedCalls: {
+            ...prev.paginatedCalls,
+            nodes: newPaginatedCalls,
+          },
+        });
+      },
+    });
+  }, []);
 
   const value: ValuesType = {
     loading,
