@@ -1,13 +1,12 @@
-import { useState } from "react";
-import { Pagination, BaseRecord, Tab } from "@aircall/tractor";
-import { CallsTableWrapper, PaginationWrapper } from "./CallsView.styled";
+import { Pagination, BaseRecord } from "@aircall/tractor";
+import { PaginationWrapper } from "./CallsView.styled";
 import { CallsTable, CallsGrouped } from "./components";
 import { useCalls } from "hooks/useCalls";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "constants/index";
+import { CallsTableWrapper } from "./CallsView.styled";
 
 export const CallsView = () => {
-  const [activeTab, setActiveTab] = useState(0);
   const navigate = useNavigate();
 
   const handleRowClick = (rowData: BaseRecord) => {
@@ -25,40 +24,27 @@ export const CallsView = () => {
     activePage,
     pageSize,
     handlePageSizeChange,
+    isGroupedByDateActive,
   } = useCalls();
 
   return (
     <>
-      <CallsTableWrapper>
-        <Tab.Container
-          activeTabId={activeTab}
-          onChange={(id: number) => {
-            setActiveTab(id);
-          }}
-        >
-          <Tab.Menu space={10}>
-            <Tab.MenuItem id={0}>Calls table</Tab.MenuItem>
-            <Tab.MenuItem id={1}>Grouped by date</Tab.MenuItem>
-          </Tab.Menu>
-          <Tab.Content>
-            <Tab.Item id={0}>
-              <CallsTable
-                handleRowClick={handleRowClick}
-                handleArchive={handleArchive}
-                handleDisableRow={handleDisableRow}
-                loading={loading}
-                callsList={callsList}
-              />
-            </Tab.Item>
-            <Tab.Item id={1}>
-              <CallsGrouped
-                handleRowClick={handleRowClick}
-                callsList={groupedCallsList}
-              />
-            </Tab.Item>
-          </Tab.Content>
-        </Tab.Container>
-      </CallsTableWrapper>
+      {isGroupedByDateActive ? (
+        <CallsTableWrapper>
+          <CallsGrouped
+            handleRowClick={handleRowClick}
+            callsList={groupedCallsList}
+          />
+        </CallsTableWrapper>
+      ) : (
+        <CallsTable
+          handleRowClick={handleRowClick}
+          handleArchive={handleArchive}
+          handleDisableRow={handleDisableRow}
+          loading={loading}
+          callsList={callsList}
+        />
+      )}
       {totalCount && (
         <PaginationWrapper>
           <Pagination

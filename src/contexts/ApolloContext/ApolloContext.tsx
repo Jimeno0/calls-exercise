@@ -29,7 +29,6 @@ const wsLink = new WebSocketLink(
     }),
   })
 );
-console.log({ wsLink });
 
 const splitLink = split(
   ({ query }) => {

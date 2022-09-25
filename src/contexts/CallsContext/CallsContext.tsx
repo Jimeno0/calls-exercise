@@ -20,6 +20,8 @@ type ValuesType = {
   groupedCallsList: {};
   callTypeFilters: string[];
   callDirectionFilters: string[];
+  isGroupedByDateActive: boolean;
+  setIsGroupedByDateActive: (value: boolean) => void;
   handleAppyFilters: (
     typeFilters: string[],
     directionFilters: string[]
@@ -44,6 +46,8 @@ export const CallsContext = createContext({
   callDirectionFilters: initialCallDirectionFilters,
   handleAppyFilters: (typeFilters: string[], directionFilters: string[]) => {},
   groupedCallsList: {},
+  isGroupedByDateActive: false,
+  setIsGroupedByDateActive: (value: boolean) => {},
 });
 
 export const CallsContextProvider = ({
@@ -53,6 +57,7 @@ export const CallsContextProvider = ({
 }) => {
   const [pageSize, setPageSize] = useState(50);
   const [activePage, setActivePage] = useState(0);
+  const [isGroupedByDateActive, setIsGroupedByDateActive] = useState(false);
   const [callTypeFilters, setCallTypeFilters] = useState(
     initialCallTypeFilters
   );
@@ -154,6 +159,8 @@ export const CallsContextProvider = ({
     callTypeFilters,
     callDirectionFilters,
     handleAppyFilters,
+    isGroupedByDateActive,
+    setIsGroupedByDateActive,
   };
 
   return (

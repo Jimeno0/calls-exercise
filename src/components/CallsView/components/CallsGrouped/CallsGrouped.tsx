@@ -1,4 +1,16 @@
-import { Accordion, Box, Typography, Flex, BaseRecord } from "@aircall/tractor";
+import {
+  Accordion,
+  Box,
+  Typography,
+  Grid,
+  BaseRecord,
+  CallInboundFilled,
+  CallOutboundFilled,
+  HeadsetOutlined,
+  CalendarOutlined,
+  Flex,
+  ArchiveFilled,
+} from "@aircall/tractor";
 import { CallType, GroupedCalls } from "types";
 
 type Props = {
@@ -8,20 +20,51 @@ type Props = {
 
 export const CallsGrouped = ({ callsList, handleRowClick }: Props) => {
   const renderAccordionContent = (call: CallType) => {
+    const { direction, is_archived, id, created_at, call_type } = call;
+    const isInboundCall = direction === "inbound";
     return (
-      <Flex
+      <Grid
+        gridTemplateColumns={"1fr 1fr"}
+        gridTemplateRows={"auto"}
+        maxWidth="800px"
+        paddingY={20}
+        paddingX={10}
+        gridGap={3}
         key={call.id}
-        p="m"
+        borderBottomWidth="1px"
+        borderBottomStyle="solid"
+        borderBottomColor="primary.base"
         justifyContent="space-between"
         onClick={() => {
           handleRowClick(call);
         }}
       >
-        <Typography>{call.id}</Typography>
-        <Typography>{call.created_at}</Typography>
-        <Typography>{call.call_type}</Typography>
-        <Typography>{call.direction}</Typography>
-      </Flex>
+        <Typography mb={3} fontWeight="bold" gridColumn={"1/3"}>
+          {id}
+        </Typography>
+        <Flex alignItems="center">
+          <CalendarOutlined color="primary.base" />
+          <Typography ml={2}>{created_at}</Typography>
+        </Flex>
+        <Flex alignItems="center">
+          <HeadsetOutlined color="primary.base" />
+          <Typography ml={2}>{call_type}</Typography>
+        </Flex>
+        <Flex alignItems="center">
+          {isInboundCall ? (
+            <CallInboundFilled color="primary.base" />
+          ) : (
+            <CallOutboundFilled color="primary.base" />
+          )}
+          <Typography ml={2}>{direction}</Typography>
+        </Flex>
+        <Flex alignItems="center">
+          <ArchiveFilled color="primary.base" />
+          <Typography ml={2}>
+            {is_archived ? "" : "Not"} archieved call
+          </Typography>
+        </Flex>
+      </Grid>
     );
   };
 
@@ -30,7 +73,13 @@ export const CallsGrouped = ({ callsList, handleRowClick }: Props) => {
       return (
         <Accordion.Item key={element} id={index}>
           <Accordion.Header>
-            <Box backgroundColor="#E8E8E6" p="s" width="100%" cursor="pointer">
+            <Box
+              backgroundColor="primary.base"
+              p="s"
+              width="100%"
+              cursor="pointer"
+              color="white"
+            >
               <Typography variant="subheading">{element}</Typography>
             </Box>
           </Accordion.Header>

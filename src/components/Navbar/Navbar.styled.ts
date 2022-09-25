@@ -4,9 +4,9 @@ export const NavbarWrapper = styled.nav`
   top: 0px;
   position: sticky;
   height: 70px;
-  z-index: 1;
+  z-index: 2;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   padding: 20px 30px;
   > button {

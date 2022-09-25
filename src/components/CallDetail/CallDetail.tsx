@@ -48,11 +48,14 @@ export const CallDetail = ({ id }: { id: string }) => {
   };
   return (
     <Grid
-      boxShadow={1}
+      boxShadow={{
+        _: 0,
+        md: 1,
+      }}
       borderRadius={8}
       gridTemplateColumns={"1fr 1fr"}
       gridTemplateRows={"auto"}
-      maxWidth="800px"
+      maxWidth="700px"
       margin="70px auto"
       padding={20}
       gridGap={3}
