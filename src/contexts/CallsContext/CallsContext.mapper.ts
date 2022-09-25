@@ -41,7 +41,7 @@ const parseData = (data: CallType[], filters: Filters): CallType[] => {
   });
 };
 
-const parseGroupedData = (data: CallType[], filters: Filters): GroupedCalls => {
+const parseGroupedData = (data: CallType[]): GroupedCalls => {
   if (!data) return {};
   return data.reduce((prev: GroupedCalls, next: CallType) => {
     const date = next.created_at;

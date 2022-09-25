@@ -11,12 +11,11 @@ This is a demo app where the user can login and handle a list of calls. Apply fi
 ## Testing
 
 - You can run `yarn test:dev` to help you during development
+- Run `yarn e2e` with a valid app proces [http://localhost:3000](http://localhost:3000) to get started with End to end tests.
 - You can also run `yarn lint:ts` any moment to audit your Typescript files
 
 ## Building
 
 - Run `yarn build` to generate the production build
-
-## NOTES
 
 > NOTE: this app was boostraped with [Create React App](https://github.com/facebook/create-react-app) for more scirpting documentation

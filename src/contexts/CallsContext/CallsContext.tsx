@@ -85,10 +85,7 @@ export const CallsContextProvider = ({
     data?.paginatedCalls?.nodes,
     filters
   );
-  const groupedCallsList = callsTableMapper.parseGroupedData(
-    callsList,
-    filters
-  );
+  const groupedCallsList = callsTableMapper.parseGroupedData(callsList);
   const totalCount = data?.paginatedCalls?.totalCount;
 
   const handlePageChange = (value: number) => {
