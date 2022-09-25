@@ -27,7 +27,8 @@
     "build": "react-scripts build",
     "test:dev": "react-scripts test --transformIgnorePatterns \"node_modules/(?!@aircall/tractor)/\"",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!@aircall/tractor)/\" --watchAll=false",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
