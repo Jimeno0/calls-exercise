@@ -14,7 +14,6 @@ type ApolloClientProps = {
 };
 
 const API_URL = process.env.REACT_APP_GRAPHQL_URI;
-console.log({ API_URL });
 
 const httpLink = new HttpLink({ uri: API_URL });
 
