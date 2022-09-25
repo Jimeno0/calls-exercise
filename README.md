@@ -18,4 +18,10 @@ This is a demo app where the user can login and handle a list of calls. Apply fi
 
 - Run `yarn build` to generate the production build
 
+## Further steps
+
+- Add more e2e testing
+- Add more unit testing (to fit X coverage)
+- Add CI/CD
+
 > NOTE: this app was boostraped with [Create React App](https://github.com/facebook/create-react-app) for more scirpting documentation
