@@ -1,7 +1,7 @@
 import { Tractor } from "@aircall/tractor";
 import { BrowserRouter } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
-import { HomeView, LoginView, DetailView, ErrorView } from "views";
+import { HomeView, LoginView, DetailView } from "views";
 import { AuthProvider, ApolloProvider } from "contexts";
 import { ProtectedRoute } from "components";
 import { PATHS } from "constants/index";
@@ -18,7 +18,7 @@ const App = () => {
                 <Route path={PATHS.detail} element={<DetailView />} />
               </Route>
               <Route path={PATHS.login} element={<LoginView />} />
-              <Route path="*" element={<ErrorView />} />
+              <Route path="*" element={<HomeView />} />
             </Routes>
           </AuthProvider>
         </ApolloProvider>

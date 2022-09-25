@@ -1,7 +1,7 @@
 import { useState, useEffect, createContext } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { PAGINATED_CALLS } from "gql/queries";
-import { ARCHIEVE_CALL } from "gql/mutations";
+import { ARCHIEVE_CALL, REFRESH_TOKEN } from "gql/mutations";
 import { ON_UPDATE_CALL } from "gql/subscriptions";
 import { BaseRecord } from "@aircall/tractor";
 import { callsTableMapper } from "./CallsContext.mapper";
@@ -64,6 +64,7 @@ export const CallsContextProvider = ({
   const [callDirectionFilters, setCallDirectionTypeFilters] = useState(
     initialCallDirectionFilters
   );
+  const [handleRefreshToken] = useMutation(REFRESH_TOKEN);
   const { loading, subscribeToMore, fetchMore, data } = useQuery(
     PAGINATED_CALLS,
     {
@@ -71,6 +72,7 @@ export const CallsContextProvider = ({
         offset: activePage,
         limit: pageSize,
       },
+      onCompleted: () => handleRefreshToken(),
     }
   );
 
@@ -102,9 +104,6 @@ export const CallsContextProvider = ({
     data.forEach(({ id }: BaseRecord) => {
       archive({
         variables: { id },
-        // onCompleted: () => {
-        //   console.log("SUCCESSSSS");
-        // },
       });
     });
   };

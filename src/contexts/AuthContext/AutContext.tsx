@@ -8,7 +8,7 @@ import { PATHS } from "constants/index";
 export const AuthContext = createContext({
   isUserLoggedIn: false,
   handleLogin: ({ username, password }: LoginProps) => {},
-  updateToken: () => {},
+  handleRefreshToken: () => {},
   handleLogout: () => {},
 });
 
@@ -29,6 +29,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [updateToken, { loading, called }] = useMutation(REFRESH_TOKEN);
 
   useEffect(() => {
+    handleRefreshToken();
+  }, []);
+
+  const handleRefreshToken = () => {
     updateToken({
       onCompleted: ({ refreshTokenV2 }) => {
         const { access_token, refresh_token } = refreshTokenV2;
@@ -37,7 +41,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setIsUserLoggedIn(true);
       },
     });
-  }, []);
+  };
 
   const handleLogin = ({ username, password }: LoginProps) => {
     login({
@@ -63,7 +67,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     isUserLoggedIn,
     handleLogin,
     handleLogout,
-    updateToken,
+    handleRefreshToken,
   };
 
   if (!called || loading) return <div />;
