@@ -34,6 +34,7 @@ export const CallDetail = ({ id }: { id: string }) => {
     to,
     via,
   } = callData;
+
   const isInboundCall = direction === "inbound";
 
   const renderNotes = () => {
